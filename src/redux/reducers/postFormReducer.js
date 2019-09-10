@@ -5,7 +5,7 @@ const initialState = {
 }
 
 export default function (state = initialState, action) {
-  switch(action) {
+  switch(action.type) {
     case NEW_POSTS : 
     console.log('post form reducer')
     return {

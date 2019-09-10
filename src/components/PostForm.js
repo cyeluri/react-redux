@@ -1,6 +1,9 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import {newPost} from '../redux/actions/postFormActions';
 
-export default class PostForm extends Component {
+class PostForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,6 +20,26 @@ export default class PostForm extends Component {
 
   onSubmit = (e) => {
     e.preventDefault();
+    const post = {
+      title: this.state.title,
+      body: this.state.comment
+    }
+    this.props.newPost(post);
+/*    fetch(
+      'https://jsonplaceholder.typicode.com/posts',
+      {
+        method : 'POST',
+        headers: {
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify(post)
+      }
+    ).then(
+      res => res.json()
+    ).then(
+      data => console.log(data)
+    );
+*/    
   }
 
   render() {
@@ -38,3 +61,14 @@ export default class PostForm extends Component {
     )
   }
 }
+
+PostForm.prototypes = {
+  newPost: PropTypes.func.isRquired,
+  post: PropTypes.object.isRquired
+}
+
+const mapStateToProps = state => ({
+  post: state.newPost.item
+});
+
+export default connect(mapStateToProps,{ newPost })(PostForm);

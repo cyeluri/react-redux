@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {fetchPosts} from '../redux/actions/postActions';
 
@@ -6,6 +7,12 @@ class Posts extends Component {
 
   componentWillMount() {
     this.props.fetchPosts();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.newPost) {
+      this.props.posts.unshift(nextProps.newPost);
+    }
   }
 
   render() {
@@ -26,8 +33,15 @@ class Posts extends Component {
   }
 }
 
+Posts.prototypes = {
+  fetchPosts: PropTypes.func.isRquired,
+  posts: PropTypes.array.isRquired,
+  newPost: PropTypes.func.isRquired
+}
+
 const mapStateToProps = state => ({
-  posts: state.posts.items
+  posts: state.posts.items,
+  newPost: state.newPost.item
 });
 
 export default connect(mapStateToProps,{ fetchPosts })(Posts);

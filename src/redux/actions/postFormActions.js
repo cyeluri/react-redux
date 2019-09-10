@@ -1,6 +1,6 @@
 import {NEW_POSTS} from './types';
 
-export const NewPost = newPost => dispatch => {
+export const newPost = (newPost) => dispatch => {
   console.log('create new post');
   fetch('https://jsonplaceholder.typicode.com/posts', {
     method : 'POST',
